@@ -11,7 +11,7 @@ const authentication=function(req,res,next){
   }
   let decodedtoken = jwt.verify(token, "project1-uranium");
   if(!decodedtoken){
-    return res.status(401).send({status:false,error:"Its not a valid token"})
+    return res.status(401).send({status:false,msg:"Its not a valid token"})
   }
   next()
 }
@@ -25,7 +25,7 @@ const authorisation = async function (req, res, next) {
 
  let authorIdFound= await blogModel.findOne({authorId : authorLoggedIn}).select({_id : 0 , authorId:1})
   if (!authorIdFound) {
-    return res.status(404).send({ status: false, data: "Author did not create blog" });
+    return res.status(404).send({ status: false, msg: "Author did not create blog" });
   } // author exist but not created blog. Here we are checking blog Id from author id.
   req["authorId"]= decodedtoken.authorId
   next();
